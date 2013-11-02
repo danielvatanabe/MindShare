@@ -1,3 +1,31 @@
+<?php
+    
+    $error = NULL;
+    try{
+        if (isset($_POST["login"]) && isset($_POST["nome"]) && isset($_POST["cidade"])){
+            if (!strlen($_POST["login"])) throw new Exception("Login não pode ser vazio.");
+            if (!strlen($_POST["nome"])) throw new Exception("Nome não pode ser vazio.");
+            
+            require ("include/db.inc");
+            $query = $db->query("
+                                INSERT INTO interessed(
+                                                       email
+                                                       )VALUES(
+                                                               ".$db->quote($_POST["email"]).",
+                                                               );");
+                                
+                                if ($query && $query->rowCount()==1){
+                                $_SESSION["tsn_id"] = $db->lastInsertId();
+                                $_SESSION["tsn_login"] = $_POST["login"];
+                                header("Location: main.php");
+                                }else throw new Exception("Nome ou login duplicados.");
+                                }
+                                }catch(Exception $e){
+                                $error = $e->getMessage();
+                                }
+                                
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- saved from url=(0035)http://unbouncepages.com/mindshare/ -->
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
