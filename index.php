@@ -632,7 +632,7 @@ window.module.lp.form.data = {"formContainerId":"lp-pom-form-24","errorContainer
 <div class="lp-positioned-content" style="width: 760px; margin-left: -380px;">
 <div class="lp-element lp-pom-image" id="lp-pom-image-9">
 <div class="lp-pom-image-container" style="overflow: hidden;">
-<img src="./unbounce/ws4161-o-default-logo-left-light.png" alt=""></div>
+<img src="./image/logo.png" alt=""></div>
 </div>
 <div class="lp-element lp-pom-text" id="lp-pom-text-11" style="height: auto;">
 <p xmlns="">
