@@ -1,29 +1,21 @@
 <?php
     
     $error = NULL;
-    try{
-        if (isset($_POST["login"]) && isset($_POST["nome"]) && isset($_POST["cidade"])){
-            if (!strlen($_POST["login"])) throw new Exception("Login não pode ser vazio.");
-            if (!strlen($_POST["nome"])) throw new Exception("Nome não pode ser vazio.");
+    $sucess= false;
+    //try{
+    if (isset($_POST["email"]) && $email = $_POST["email"]){
+            if (!strlen($email)) throw new Exception("E-mail n�o pode ser vazio.");
             
             require ("include/db.inc");
-            $query = $db->query("
-                                INSERT INTO interessed(
-                                                       email
-                                                       )VALUES(
-                                                               ".$db->quote($_POST["email"]).",
-                                                               );");
-                                
-                                if ($query && $query->rowCount()==1){
-                                $_SESSION["tsn_id"] = $db->lastInsertId();
-                                $_SESSION["tsn_login"] = $_POST["login"];
-                                header("Location: main.php");
-                                }else throw new Exception("Nome ou login duplicados.");
-                                }
-                                }catch(Exception $e){
-                                $error = $e->getMessage();
-                                }
-                                
+            $query = $db->query("INSERT INTO unbouce(email) VALUES(".$db->quote($_POST["email"]).");");
+            
+            $sucess = true;
+	}
+    /*                            
+    } catch (Exception $e){
+    	$error = $e->getMessage();
+    }
+      */                          
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -672,17 +664,49 @@ window.module.lp.form.data = {"formContainerId":"lp-pom-form-24","errorContainer
 </div>
 <div class="lp-element lp-pom-box" id="lp-pom-box-23">
 <div class="lp-element lp-pom-form" id="lp-pom-form-24">
-<form action="http://unbouncepages.com/fsg?pageId=a03a6026-43c6-11e3-b1f7-12313e02a4f0&variant=a" method="POST">
-<input type="hidden" name="pageId" value="a03a6026-43c6-11e3-b1f7-12313e02a4f0"><input type="hidden" name="pageVariant" value="a">
-<fieldset class="clearfix" style="width: 552px; height: 40px;">
-<div class="lp-pom-form-field clearfix" style="width: 552px; height: 42px; top: 0px;">
-<label for="email" class="main" style="top: 0px; width: 46px; height: auto;">Email&nbsp;*</label><input type="text" id="email" name="email" class="text" style="top: 0px; left: 58px; width: 470px; font-size: 15px; height: 38px; padding-left: 11px; padding-right: 11px; lineheight: 15px;">
+
+<?php 
+
+	if($sucess) {
+		?>
+		<h3 style="color: white !important">E-mail cadastrado com sucesso! Logo te avisaremos quando estivermos prontos =)</h3>
+		<?php
+	} else {
+		
+		?>
+
+		
+		<form action="./index.php" method="POST" id="email-form">
+		<input type="hidden" name="pageId" value="a03a6026-43c6-11e3-b1f7-12313e02a4f0"><input type="hidden" name="pageVariant" value="a">
+		<fieldset class="clearfix" style="width: 552px; height: 40px;">
+		<div class="lp-pom-form-field clearfix" style="width: 552px; height: 42px; top: 0px;">
+		<label for="email" class="main" style="top: 0px; width: 46px; height: auto;">Email&nbsp;*</label><input type="text" id="email" name="email" class="text" style="top: 0px; left: 58px; width: 470px; font-size: 15px; height: 38px; padding-left: 11px; padding-right: 11px; lineheight: 15px;">
+		</div>
+		</fieldset>
+		</form>
+		
+		
+		
+		<?php
+
+	}
+?>
+
+
+
+<?php 
+
+	if(!$sucess) {
+?>
+<a class="lp-element lp-pom-button" id="lp-pom-button-25" href="#" onClick="$('#email-form').submit();"><span class="label" style="margin-top: -10px;">Seja notificado!</span></a>
+<?php 
+	}
+?>
 </div>
-</fieldset>
-</form>
-<a class="lp-element lp-pom-button" id="lp-pom-button-25" href="#" onClick="submitEmail()"><span class="label" style="margin-top: -10px;">Seja notificado!</span></a>
 </div>
-</div>
+
+
+
 <div class="lp-element lp-pom-text" id="lp-pom-text-33" style="height: auto;">
 <p>
 <span style="color:#999999;"><span style="font-size: 13px; line-height: 17px;"><span style="font-family: arial,helvetica,sans-serif;">&nbsp;Copyright © 2013 MindShare. Todos os direitos reservados.</span></span></span>
@@ -779,15 +803,6 @@ window.module.lp.form.data = {"formContainerId":"lp-pom-form-24","errorContainer
 
   ga('create', 'UA-45352879-1', 'mindshare.co');
   ga('send', 'pageview');
-
-</script>
-<script>
-// Email Form Submit
-
-function submitEmail() {
-	var email = $("#email");
-	$.post()
-}
 
 </script>
 
